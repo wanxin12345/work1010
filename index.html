@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>10-20.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<script type="text/javascript">
+//json
+var arr = [2,1,3,4];
+/*for(var i = 0; i < arr.length; i++){
+	alert(arr[i]);
+}*/
+
+var json = {b:13,a:12,c:14};
+for(var a in json){
+	//alert(name);b,a,c
+	
+	console.log(json[a]);//13,12,14
+}
+//数组
+var arr = [2,1,3,4];
+for(var name in arr){
+	//alert(name);//0,1,2,3
+	console.log(arr[name]);//2,1,3,4
+}
+//setStyle
+function setStyle(){//定义setStyle函数才能使用
+	var obj = arguments[0];
+	if(arguments.length == 3){
+		var name = arguments[1];
+		var value = arguments[2];
+		obj.style[name] = value;		
+	}else{
+		var json = arguments[1];
+		for(var name in json){
+			obj.style[name] = json[name];	
+		}	
+	}
+}
+window.onload = function(){
+	var oBox = document.getElementById('box');
+	
+	oBox.onclick = function(){
+		setStyle(oBox,{
+			width: '200px',
+			height: '200px',
+			background: 'green'	
+		});	
+	}
+	//trycatch
+	/*try{
+		//可能有错误的代码;
+	}catch(e){
+		alert(e.message);
+		补救的代码;
+	}*/
+	try{
+		var oBox = document.getElementsById('box');
+	}catch(e){
+		console.log("trycatch结果是:")
+		console.log(e.message);
+		console.log('1');	
+	}
+	//本月第一天是周几
+	var oDate  = new Date();
+    oDate.setDate(1);
+    alert("本月第一天是周几:"+oDate.getDay());
+	
+	//本月多少天
+	
+    oDate.setMonth(oDate.getMonth()+1);
+    oDate.setDate(0);
+    alert("本月多少天:"+oDate.getDate());
+	
+	//通过class获取元素
+	var oWrap = document.getElementById('wrap');
+	var aRed = getByClass(oWrap,'blue');
+	for(var i = 0; i < aRed.length; i++){
+		//alert(aRed[i]);	//4个符合需求的标签;
+		aRed[i].style.background = 'blue';
+	}
+	
+}
+//逗号表达式
+var a = (1,2,3,4,5,'b',8,10);
+//alert(a);//b
+if(1,0){
+	alert('true');
+}else{
+	alert('false');
+}
+//关于变量
+function show(){
+	var a = b = c = d = 1;
+	var a = 1;
+	b = 1;
+	c = 1;
+	d = 1;	
+	alert('函数里面的:' + a);
+}
+show();
+/*alert('函数外面的:' + b);*/
+//检测参数是否都为数字
+function show(){
+	for(var i = 0; i < arguments.length; i++){
+		if(typeof arguments[i] != 'number')return false;	
+	}
+	return true;
+}
+alert(show(1,2,3,'4',5,5));
+//九九乘法表
+document.write('<table>');
+for(var k = 1; k <= 9; k++){
+	document.write('<tr>');
+	for(var j = 1; j <= k; j++){
+		document.write('<td>'+k+'*'+j+'='+k*j+'</td>');
+	}
+	document.write('</tr>');
+}
+//删除数组中的奇数
+var arr =[1,2,3,4,5,65,1,3,4,5,6,32,2];
+for(var i = 0; i < arr.length; i++){
+	if(arr[i]%2 == 1){
+		arr.splice(i,1);
+		i--;	
+	}
+}
+alert("[1,2,3,4,5,65,1,3,4,5,6,32,2]删除奇数后还有:"+arr);
+//删除重复变量
+var arr = [1,2,3,4,5,5,5,,6,1,2,3,4,6,5];
+arr.sort(function(n1,n2){
+	return n1 - n2;
+});
+for(var i = 0; i < arr.length; i++){
+	if(arr[i] == arr[i+1]){
+		arr.splice(i,1);
+		i--;	
+	}
+}
+alert("[1,2,3,4,5,5,5,,6,1,2,3,4,6,5]删除重复变量后:"+arr);
+//首字母转大写
+var str='welcome to China';
+var	arr=str.split(' ');
+var arr2=[];
+     for(var i=0;i<arr.length;i++){
+	     var str1=arr[i].charAt(0).toUpperCase()+arr[i].substring(1);
+		 arr2.push(str1);
+	 }	
+	alert("welcome to China首字母大写:"+arr2.join(' '));
+//通过class获取元素,还有一段代码在windiw.omload里面
+function findInArr(n,arr){
+	for(var i = 0; i < arr.length; i++){
+		if(arr[i] == n)return true;	
+	}
+	return false;
+}
+//getByClass(oParent,sClass);//oParent:从哪个父级下面获取;sClass:要获取的是哪个class名字;
+function getByClass(oParent,sClass){
+	if(oParent.getElementsByClassName){
+		return oParent.getElementsByClassName(sClass);
+	}else{
+		var aEle = oParent.getElementsByTagName('*');
+		var arr = [];
+		for(var i = 0; i < aEle.length; i++){
+			var tmp = aEle[i].className.split(' ');	
+			if(findInArr(sClass,tmp) == true){
+				arr.push(aEle[i]);	
+			}
+		}
+		return arr;	
+	}
+}
+//找最小数和最小数出现的位置
+var arr = [1,2,43,2,1,3,4,5,0,1,-100,324,5];
+var iMin = arr[0];
+var iMinIndex;
+for(var i = 0; i < arr.length; i++){
+	if(arr[i] < iMin){
+		iMin = arr[i];
+		iMinIndex = i;	
+	}
+}
+alert('[1,2,43,2,1,3,4,5,0,1,-100,324,5]最小数是' + iMin + ':出现的位置是' + iMinIndex);
+//引用1
+var oDate = new Date();
+var oDate2 = oDate;
+oDate2.setDate(1);
+//alert(oDate2);
+alert(oDate);
+//引用2
+var arr1 = [1,2,3,4];
+var arr2 = arr1;
+//arr2.push(5);
+//alert(typeof arr1);
+arr2[0] = 9;
+alert(arr1[0]);
+
+
+
+</script>
+<style>
+#box {
+	width: 100px;
+	height: 100px;
+	background: red;
+}
+td {
+	border: #000 1px solid;
+}
+
+</style>
+
+  </head>
+  
+  <body>
+   <div id="box"></div>
+   <div class="red">div</div>
+<p class="blue">p标签</p>
+<span class="red blue" style="display: block;">span</span>
+<h1 class="blue red">h1</h1>
+<h3 class="red1">h3</h3>
+<h5 class="red2 blue red">h5</h5>
+<ul id="wrap">
+	<li class="blue">li</li>
+    <li class="blue1">li</li>
+    <li class="red">li</li>
+    <li class="redblue">li</li>
+    <li class="blue green">li</li>
+    <li class="yellow">li</li>
+</ul>
+   
+  </body>
+</html>
